@@ -32,6 +32,7 @@ public class CustomerServiceTests {
     public void setup(){
         formatter = new SimpleDateFormat("MM/dd/yyyy");
     }
+
     @Test
     public void doesExist(){
         assertNotNull(customerService);
@@ -79,5 +80,25 @@ public class CustomerServiceTests {
         customer.setName("John");
         customerService.editCustomer(customer);
         assertEquals("John", customer.getName());
+    }
+
+    @Test
+    public void getCustomerByName() throws ParseException {
+        List<Customer> customers = new ArrayList<>();
+        customers.add(new Customer("Sally", formatter.parse("01/04/2019")));
+        customers.add(new Customer("John", formatter.parse("01/05/2019")));
+        customers.add(new Customer("Mary", formatter.parse("01/06/2019")));
+        customerRepository.saveAll(customers);
+        assertEquals("01/04/2019", customerService.getCustomerByName("Sally").getDate());
+    }
+
+    @Test
+    public void getCustomerByDate() throws ParseException {
+        List<Customer> customers = new ArrayList<>();
+        customers.add(new Customer("Sally", formatter.parse("01/04/2019")));
+        customers.add(new Customer("John", formatter.parse("01/05/2019")));
+        customers.add(new Customer("Mary", formatter.parse("01/06/2019")));
+        customerRepository.saveAll(customers);
+        assertEquals("Sally", customerService.getCustomerByDate(formatter.parse("01/04/2019")).getName());
     }
 }

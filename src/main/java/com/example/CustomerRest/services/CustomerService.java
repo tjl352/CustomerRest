@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -19,8 +20,16 @@ public class CustomerService {
        return customerRepository.findAll();
     }
 
+    public Customer getCustomerByDate(Date date){
+        return customerRepository.getByDate(date);
+    }
+
+    public Customer getCustomerByName(String name){
+        return customerRepository.findByName(name);
+    }
+
     public Customer getOneCustomer(Long id) {
-        return customerRepository.getOne(id);
+        return customerRepository.findById(id).get();
     }
 
     public void deleteByName(Long id) {
